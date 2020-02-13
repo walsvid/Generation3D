@@ -1,0 +1,8 @@
+based_on:
+  - "resnet.yml"
+checkpoint: "/home/wc/workspace/SRP2M/experiments/checkpoints/p2m/default_one_resnet_0212192118/002700_000003.pt"
+test:
+  batch_size: 4
+dataset:
+  filelist_test:
+    - "02691156_sr_train_one.lst"

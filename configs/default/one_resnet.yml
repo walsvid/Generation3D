@@ -1,0 +1,11 @@
+based_on:
+  - "resnet.yml"
+dataset:
+  filelist_train:
+    - "02691156_sr_train_one.lst"
+num_gpus: 2
+train:
+  batch_size: 16
+loss:
+  weights:
+    chamfer_opposite: 1.
