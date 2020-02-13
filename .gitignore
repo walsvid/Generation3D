@@ -1,0 +1,11 @@
+*.pyc
+.idea/
+experiments*
+datasets/data/*
+!.gitkeep
+.vscode
+misc
+.DS_Store
+__pycache__
+**/__pycache__/
+external
