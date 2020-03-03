@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument('--checkpoint', help='checkpoint file', type=str)
     parser.add_argument('--num-epochs', help='number of epochs', type=int)
     parser.add_argument('--version', help='version of task (timestamp by default)', type=str)
-    parser.add_argument('--name', default='p2m', type=str)
+    parser.add_argument('--name', help='model name', type=str)
 
     args = parser.parse_args()
 

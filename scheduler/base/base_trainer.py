@@ -33,6 +33,7 @@ class Trainer(CheckpointRunner):
         self.losses = AverageMeter()
         # Evaluators
         # self.evaluators = [Evaluator(self.options, self.logger, self.summary_writer, shared_model=self.model)]
+        self.dataset_size = None
 
     def init_auxiliary(self):
         pass
@@ -106,6 +107,8 @@ class Trainer(CheckpointRunner):
         self.logger.info("Start Trainning.")
         # Create data loader at very begining
         train_data_loader = self.get_dataloader()
+        self.dataset_size = len(train_data_loader)
+
         # Run training for num_epochs epochs
         for epoch in range(self.epoch_count, self.options.train.num_epochs):
             self.epoch_count += 1

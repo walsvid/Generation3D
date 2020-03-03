@@ -222,8 +222,8 @@ def reset_options(options, args, phase='train'):
         options.num_gpus = args.gpus
     if hasattr(args, "shuffle") and args.shuffle:
         options.train.shuffle = options.test.shuffle = True
-
-    options.name = args.name
+    if hasattr(args, "name") and args.name:
+        options.name = args.name
     cwd = os.getcwd()
 
     if options.version is None:

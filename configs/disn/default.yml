@@ -15,7 +15,7 @@ test:
   batch_size: 1
   shuffle: false
 train:
-  batch_size: 16
+  batch_size: 20
   num_epochs: 50
   backbone_pretrained_model: null
 optim:
