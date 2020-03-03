@@ -80,6 +80,7 @@ options.dataset.predict.folder = "predict"
 options.model = edict()
 options.model.name = "pixel2mesh"
 options.model.backbone_pretrained = True
+
 options.model.hidden_dim = 192
 options.model.last_hidden_dim = 192
 options.model.coord_dim = 3
@@ -93,6 +94,11 @@ options.model.z_threshold = 0
 # please follow experiments/tensorflow.yml
 options.model.align_with_tensorflow = False
 
+options.model.img_size = 224
+options.model.map_size = 137
+options.model.tanh = False
+
+
 options.loss = edict()
 options.loss.weights = edict()
 options.loss.weights.normal = 1.6e-4
@@ -103,12 +109,12 @@ options.loss.weights.constant = 1.
 options.loss.weights.chamfer = [1., 1., 1.]
 options.loss.weights.chamfer_opposite = 1.
 options.loss.weights.reconst = 0.
-# options.loss.sdf = edict()
-# options.loss.sdf.coefficient = 1000.
-# options.loss.sdf.threshold = 0.01
-# options.loss.sdf.weights = edict()
-# options.loss.sdf.weights.near_surface = 4.
-# options.loss.sdf.weights.scale = 10.
+options.loss.sdf = edict()
+options.loss.sdf.coefficient = 1000.
+options.loss.sdf.threshold = 0.01
+options.loss.sdf.weights = edict()
+options.loss.sdf.weights.near_surface = 4.
+options.loss.sdf.weights.scale = 10.
 # options.loss.weights.normal = 1.6e-4
 # options.loss.weights.edge = 0.3
 # options.loss.weights.laplace = 0.5

@@ -34,13 +34,13 @@ class Trainer(CheckpointRunner):
         # Evaluators
         # self.evaluators = [Evaluator(self.options, self.logger, self.summary_writer, shared_model=self.model)]
 
-    def init_auxiliary(self, model_name):
+    def init_auxiliary(self):
         pass
 
-    def init_model(self, model_name):
+    def init_model(self):
         raise NotImplementedError("Your model is not found")
 
-    def init_loss_functions(self, model_name):
+    def init_loss_functions(self):
         raise NotImplementedError("Your loss is not found")
 
     def init_optimizer(self, optim_name):
