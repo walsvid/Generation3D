@@ -1,0 +1,26 @@
+dataset:
+  name: sdfshapenet
+  filelist_train:
+    - 02691156_train.lst
+  filelist_test:
+    - 02691156_test.lst
+model:
+  backbone: vgg16
+  name: disn
+num_gpus: 4
+checkpoint: null
+num_workers: 8
+name: disn
+test:
+  batch_size: 1
+  shuffle: false
+train:
+  batch_size: 16
+  num_epochs: 50
+  backbone_pretrained_model: null
+optim:
+  lr: 1.0e-4
+  lr_scheduler: "multistep"
+  lr_step:
+    - 30
+    - 45
