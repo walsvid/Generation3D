@@ -73,7 +73,7 @@ class CheckpointRunner(object):
                             self.logger)
         elif dataset.name == "sdfshapenet":
             return SDFShapeNet(config.SHAPENET_ROOT, dataset.filelist_train if training else dataset.filelist_test,
-                               dataset.img_dir, dataset.mesh_pos,
+                               dataset.img_dir, dataset.sdf_dir,
                                dataset.normalization, dataset.shapenet,
                                self.logger)
         elif dataset.name == "shapenet_demo":
