@@ -35,7 +35,7 @@ class ShapeNet(BaseDataset):
         self.logger = logger
 
     def get_img(self, img_dir, num):
-        img_h5 = os.path.join(img_dir, "%02d_sr.h5" % num)
+        img_h5 = os.path.join(img_dir, "%02d.h5" % num)
         with h5py.File(img_h5, 'r') as h5_f:
             img_ori = h5_f["img_ori"][:].astype(np.float32) / 255.
             # img_x1 = h5_f["img_x1"][:].astype(np.float32) / 255.

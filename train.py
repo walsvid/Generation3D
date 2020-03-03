@@ -2,7 +2,8 @@ import argparse
 import sys
 
 from utils.config import options, update_options, reset_options
-from scheduler.trainer import Trainer
+# from scheduler.trainer import Trainer
+from scheduler import get_trainer
 from utils.logger import set_random_seed
 
 
@@ -32,7 +33,7 @@ def main():
     args = parse_args()
     logger, writer = reset_options(options, args)
     set_random_seed(options.seed)
-    trainer = Trainer(options, logger, writer)
+    trainer = get_trainer(options, logger, writer)
     trainer.train()
 
 

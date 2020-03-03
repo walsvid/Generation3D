@@ -46,10 +46,11 @@ class P2MModel(nn.Module):
         self.gconv = GConv(in_features=self.last_hidden_dim, out_features=self.coord_dim,
                            adj_mat=ellipsoid.adj_mat[2])
 
-    def forward(self, img):
+    def forward(self, input_batch):
         """
         :param img: images Bx3x224x224
         """
+        img = input_batch['images']
         batch_size = img.size(0)
         img_feats = self.nn_encoder(img)
         img_shape = self.projection.image_feature_shape(img)

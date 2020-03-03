@@ -9,9 +9,10 @@ from tensorboardX import SummaryWriter
 from torch.utils.data.dataloader import default_collate
 
 import utils.config as config
-from datasets.shapenet import ShapeNet
-# from datasets.shapenet import ShapeNet  # , get_shapenet_collate, ShapeNetImageFolder
-from scheduler.saver import CheckpointSaver
+from datasets.p2m_shapenet import ShapeNet
+from datasets.sdf_shapenet import ShapeNet as SDFShapeNet
+
+from scheduler.base.saver import CheckpointSaver
 
 
 class CheckpointRunner(object):
@@ -70,6 +71,11 @@ class CheckpointRunner(object):
                             dataset.img_dir, dataset.mesh_pos,
                             dataset.normalization, dataset.shapenet,
                             self.logger)
+        elif dataset.name == "sdfshapenet":
+            return SDFShapeNet(config.SHAPENET_ROOT, dataset.filelist_train if training else dataset.filelist_test,
+                               dataset.img_dir, dataset.mesh_pos,
+                               dataset.normalization, dataset.shapenet,
+                               self.logger)
         elif dataset.name == "shapenet_demo":
             raise NotImplementedError("Unsupported dataset")
             # return ShapeNetImageFolder(dataset.predict.folder, dataset.normalization, dataset.shapenet)
