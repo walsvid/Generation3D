@@ -7,3 +7,7 @@ datasets/data/*
 .DS_Store
 __pycache__
 **/__pycache__/
+external/chamfer/build
+external/chamfer/chamfer.egg-info
+external/chamfer/dist
+external/isosurface
