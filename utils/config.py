@@ -17,7 +17,7 @@ SHAPENET_ROOT = os.path.join(DATASET_ROOT, "shapenet")
 IMAGENET_ROOT = os.path.join(DATASET_ROOT, "imagenet")
 
 # ellipsoid path
-ELLIPSOID_PATH = os.path.join(DATASET_ROOT, "ellipsoid/pixel2mesh_aux_4stages.dat")
+ELLIPSOID_PATH = os.path.join(DATASET_ROOT, "shapenet/ellipsoid/pixel2mesh_aux_4stages.dat")
 
 # pretrained weights path
 PRETRAINED_WEIGHTS_PATH = {
@@ -51,10 +51,11 @@ options.checkpoint = None
 
 options.dataset = edict()
 options.dataset.name = "shapenet"
-options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
+# options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
+options.dataset.img_dir = "ShapeNetRenderingh5_v1"
 options.dataset.sdf_dir = "SDF_v1"
-options.dataset.filelist_train = ["02691156_sr_train.lst"]
-options.dataset.filelist_test = ["02691156_sr_test.lst"]
+options.dataset.filelist_train = ["02691156_train.lst"]
+options.dataset.filelist_test = ["02691156_test.lst"]
 options.dataset.normalization = True
 options.dataset.camera_f = [248., 248.]
 options.dataset.camera_c = [111.5, 111.5]
