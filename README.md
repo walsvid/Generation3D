@@ -2,8 +2,9 @@
 
 3D Shape Generation Baselines in PyTorch.
 
-![](https://img.shields.io/static/v1?label=Gen3D&message=0.1.0&color=blue)
-
+![](https://img.shields.io/static/v1?label=Gen3D&message=0.1.0&color=blue) 
+![](https://img.shields.io/static/v1?label=PyTorch&message=1.3.1&color=orange)
+![](https://img.shields.io/static/v1?label=CUDA&message=10.0&color=green)
 #### Feature
 
 - Hack of DataParallel for balanced memory usage
@@ -42,7 +43,7 @@
 
 ### Environment
 - Ubuntu 16.04 / 18.04
-- Pytorch > 1.1.0
+- Pytorch 1.3.1
 - CUDA 10
 - conda > 4.6.2
 
