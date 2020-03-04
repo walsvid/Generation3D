@@ -2,12 +2,13 @@ import argparse
 import sys
 
 from utils.config import options, update_options, reset_options
-from scheduler.trainer import Trainer
+# from scheduler.trainer import Trainer
+from scheduler import get_trainer
 from utils.logger import set_random_seed
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Compact Implicit Part Training Entrypoint')
+    parser = argparse.ArgumentParser(description='Training Entrypoint')
     parser.add_argument('--options', help='experiment options file name', required=False, type=str)
 
     args, rest = parser.parse_known_args()
@@ -21,7 +22,7 @@ def parse_args():
     parser.add_argument('--checkpoint', help='checkpoint file', type=str)
     parser.add_argument('--num-epochs', help='number of epochs', type=int)
     parser.add_argument('--version', help='version of task (timestamp by default)', type=str)
-    parser.add_argument('--name', default='p2m', type=str)
+    parser.add_argument('--name', help='model name', type=str)
 
     args = parser.parse_args()
 
@@ -32,7 +33,7 @@ def main():
     args = parse_args()
     logger, writer = reset_options(options, args)
     set_random_seed(options.seed)
-    trainer = Trainer(options, logger, writer)
+    trainer = get_trainer(options, logger, writer)
     trainer.train()
 
 

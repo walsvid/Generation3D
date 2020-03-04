@@ -4,8 +4,10 @@ experiments*
 datasets/data/*
 !.gitkeep
 .vscode
-misc
 .DS_Store
 __pycache__
 **/__pycache__/
-external
+external/chamfer/build
+external/chamfer/chamfer.egg-info
+external/chamfer/dist
+external/isosurface/not_used

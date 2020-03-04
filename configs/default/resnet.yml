@@ -2,9 +2,9 @@ checkpoint: null
 checkpoint_dir: checkpoints
 dataset:
   filelist_train:
-    - 02691156_sr_train.lst
+    - 02691156_train.lst
   filelist_test:
-    - 02691156_sr_test.lst
+    - 02691156_test.lst
   camera_c:
   - 111.5
   - 111.5
@@ -50,7 +50,7 @@ model:
   name: pixel2mesh
   z_threshold: 0
 name: p2m
-num_gpus: 1
+num_gpus: 4
 num_workers: 16
 optim:
   adam_beta1: 0.9
@@ -72,7 +72,7 @@ test:
   summary_steps: 50
   weighted_mean: false
 train:
-  batch_size: 16
+  batch_size: 32
   checkpoint_steps: 10000
   num_epochs: 110
   shuffle: true

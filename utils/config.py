@@ -17,7 +17,7 @@ SHAPENET_ROOT = os.path.join(DATASET_ROOT, "shapenet")
 IMAGENET_ROOT = os.path.join(DATASET_ROOT, "imagenet")
 
 # ellipsoid path
-ELLIPSOID_PATH = os.path.join(DATASET_ROOT, "ellipsoid/pixel2mesh_aux_4stages.dat")
+ELLIPSOID_PATH = os.path.join(DATASET_ROOT, "shapenet/ellipsoid/pixel2mesh_aux_4stages.dat")
 
 # pretrained weights path
 PRETRAINED_WEIGHTS_PATH = {
@@ -51,10 +51,11 @@ options.checkpoint = None
 
 options.dataset = edict()
 options.dataset.name = "shapenet"
-options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
+# options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
+options.dataset.img_dir = "ShapeNetRenderingh5_v1"
 options.dataset.sdf_dir = "SDF_v1"
-options.dataset.filelist_train = ["02691156_sr_train.lst"]
-options.dataset.filelist_test = ["02691156_sr_test.lst"]
+options.dataset.filelist_train = ["02691156_train.lst"]
+options.dataset.filelist_test = ["02691156_test.lst"]
 options.dataset.normalization = True
 options.dataset.camera_f = [248., 248.]
 options.dataset.camera_c = [111.5, 111.5]
@@ -79,6 +80,7 @@ options.dataset.predict.folder = "predict"
 options.model = edict()
 options.model.name = "pixel2mesh"
 options.model.backbone_pretrained = True
+
 options.model.hidden_dim = 192
 options.model.last_hidden_dim = 192
 options.model.coord_dim = 3
@@ -92,6 +94,19 @@ options.model.z_threshold = 0
 # please follow experiments/tensorflow.yml
 options.model.align_with_tensorflow = False
 
+options.model.img_size = 224
+options.model.map_size = 137
+options.model.tanh = False
+
+# == MODEL OPTIONS OF DISN ==
+options.model.disn = edict()
+options.model.disn.resolution = 257 # RESO + 1
+options.model.disn.split_chunk = 214669
+
+# == MODEL OPTIONS OF PIXEL2MESH ==
+options.model.pixel2mesh = edict()
+
+
 options.loss = edict()
 options.loss.weights = edict()
 options.loss.weights.normal = 1.6e-4
@@ -102,20 +117,13 @@ options.loss.weights.constant = 1.
 options.loss.weights.chamfer = [1., 1., 1.]
 options.loss.weights.chamfer_opposite = 1.
 options.loss.weights.reconst = 0.
-# options.loss.sdf = edict()
-# options.loss.sdf.coefficient = 1000.
-# options.loss.sdf.threshold = 0.01
-# options.loss.sdf.weights = edict()
-# options.loss.sdf.weights.near_surface = 4.
-# options.loss.sdf.weights.scale = 10.
-# options.loss.weights.normal = 1.6e-4
-# options.loss.weights.edge = 0.3
-# options.loss.weights.laplace = 0.5
-# options.loss.weights.move = 0.1
-# options.loss.weights.constant = 1.
-# options.loss.weights.chamfer = [1., 1., 1.]
-# options.loss.weights.chamfer_opposite = 1.
-# options.loss.weights.reconst = 0.
+
+options.loss.sdf = edict()
+options.loss.sdf.coefficient = 1000.
+options.loss.sdf.threshold = 0.01
+options.loss.sdf.weights = edict()
+options.loss.sdf.weights.near_surface = 4.
+options.loss.sdf.weights.scale = 10.
 
 options.train = edict()
 options.train.num_epochs = 50
@@ -215,8 +223,8 @@ def reset_options(options, args, phase='train'):
         options.num_gpus = args.gpus
     if hasattr(args, "shuffle") and args.shuffle:
         options.train.shuffle = options.test.shuffle = True
-
-    options.name = args.name
+    if hasattr(args, "name") and args.name:
+        options.name = args.name
     cwd = os.getcwd()
 
     if options.version is None:
