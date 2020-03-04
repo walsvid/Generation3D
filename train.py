@@ -8,7 +8,7 @@ from utils.logger import set_random_seed
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(description='Compact Implicit Part Training Entrypoint')
+    parser = argparse.ArgumentParser(description='Training Entrypoint')
     parser.add_argument('--options', help='experiment options file name', required=False, type=str)
 
     args, rest = parser.parse_known_args()
