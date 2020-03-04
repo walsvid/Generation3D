@@ -1,0 +1,8 @@
+based_on:
+  - default.yml
+num_gpus: 1
+checkpoint: experiments/checkpoints/disn/disn_default_0303235811/031383_000033.pt
+num_workers: 4
+test:
+  batch_size: 1
+  shuffle: false
