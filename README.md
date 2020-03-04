@@ -1,7 +1,109 @@
-# 3D-Shape-Reconstruction
-3D Shape Reconstruction Baselines in PyTorch.
+# Generation3D
 
-- [x] P2M
-- [x] DISN, SDF based method
-- [ ] OccNet
-- [ ] Volume based
+3D Shape Generation Baselines in PyTorch.
+
+![](https://img.shields.io/static/v1?label=Gen3D&message=0.1.0&color=blue)
+
+#### Feature
+
+- Hack of DataParallel for balanced memory usage
+- More Models **WIP**
+- Configurable model parameters
+- Customizable model, dataset
+
+#### Representation
+
+- 💎 Polygonal Mesh
+- 👾 Volumetric
+- 🎲 Point Cloud
+- 🎯 Implicit Function
+- 💊 Primitive
+
+#### Input Observation
+- 🏞 RGB Image
+- 📡 Depth Image
+- 👾 Voxel
+- 🎲 Point Cloud
+- 🎰 Unconditional Random
+
+#### Evaluation Metrics
+
+- Chamfer Distance
+- F-score
+- IoU
+
+#### Model Zoo
+- [x] 💎 Pixel2Mesh
+- [x] 🎯 DISN
+- [ ] 👾 Voxel Based Method
+- [ ] 🎲 PointCloud Based Method
+
+## Get Started
+
+### Environment
+- Ubuntu 16.04 / 18.04
+- Pytorch > 1.1.0
+- CUDA 10
+- conda > 4.6.2
+
+Using Anaconda to install all dependences.
+
+```
+conda env create -f environment.yml
+```
+
+### Train
+
+```
+CUDA_VISIBLE_DEVICES=<gpus> python train.py --options <config>
+```
+
+### Predict
+
+```
+CUDA_VISIBLE_DEVICES=<gpus> python predictor.py --options <config>
+```
+
+### Evaluation [WIP]
+
+### Custom guide
+
+- custom scheduler for `training/inference` loop, add code in `scheduler` and inherit base class.
+- custom model in `models/zoo`
+- custom config options in `utils/config`
+- custom dataset in `datasets/data`
+
+### External
+- Chamfer Distance
+
+## Baselines
+
+### Pixel2Mesh 🏞 💎
+
+- Input: RGB Image 
+- Representation: Mesh
+- Output: Mesh <sub>camera-view</sub>
+
+### DISN 🏞 🎯
+
+- Input: RGB Image
+- Representation: SDF
+- Post-processing: Marching Cube
+- Output: Mesh <sub>camera-view</sub>
+
+---
+
+#### Acknowledgements
+
+Our work is based on the codebase of [an unofficial pixel2mesh framework](https://github.com/noahcao/Pixel2Mesh). The Chamfer loss code is based on [ChamferDistancePytorch](https://github.com/ThibaultGROUEIX/ChamferDistancePytorch).
+
+Official baseline code
+
+- [DISN: Deep Implicit Surface Network for High-quality Single-view 3D Reconstruction](https://github.com/Xharlie/DISN)
+
+- [Pixel2Mesh: Generating 3D Mesh Models from Single RGB Images](https://github.com/nywang16/Pixel2Mesh)
+
+
+#### License
+
+Please follow the License of official implementation for each model.

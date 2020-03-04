@@ -10,4 +10,4 @@ __pycache__
 external/chamfer/build
 external/chamfer/chamfer.egg-info
 external/chamfer/dist
-external/isosurface
+external/isosurface/not_used
