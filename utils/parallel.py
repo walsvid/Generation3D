@@ -128,18 +128,18 @@ class DataParallelCriterion(DataParallel):
 
         num_gpu = len(outputs)
 
-        loss_values = [outputs[i][0] for i in range(num_gpu)]
-        result_loss_values = Reduce.apply(*loss_values) / num_gpu
+        if isinstance(outputs[0], tuple):
+            loss_values = [outputs[i][0] for i in range(num_gpu)]
+            result_loss_values = Reduce.apply(*loss_values) / num_gpu
 
-        reduced_dic = {}
-        for key in outputs[0][1].keys():
-            loss_summary_key = [outputs[i][1][key] for i in range(num_gpu)]
-            result_loss_summary_key = Reduce.apply(*loss_summary_key) / num_gpu
-            reduced_dic[key] = result_loss_summary_key
-        # result = Reduce.apply(*outputs) / len(outputs)
-        # import ipdb
-        # ipdb.set_trace()
-        result = result_loss_values, reduced_dic
+            reduced_dic = {}
+            for key in outputs[0][1].keys():
+                loss_summary_key = [outputs[i][1][key] for i in range(num_gpu)]
+                result_loss_summary_key = Reduce.apply(*loss_summary_key) / num_gpu
+                reduced_dic[key] = result_loss_summary_key
+            result = result_loss_values, reduced_dic
+        else:
+            result = Reduce.apply(*outputs) / len(outputs)
         return result
 
 
