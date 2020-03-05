@@ -54,6 +54,7 @@ options.dataset.name = "shapenet"
 # options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
 options.dataset.img_dir = "ShapeNetRenderingh5_v1"
 options.dataset.sdf_dir = "SDF_v1"
+options.dataset.voxel_dir = "ShapeNetVox32"
 options.dataset.filelist_train = ["02691156_train.lst"]
 options.dataset.filelist_test = ["02691156_test.lst"]
 options.dataset.normalization = True
@@ -100,12 +101,20 @@ options.model.tanh = False
 
 # == MODEL OPTIONS OF DISN ==
 options.model.disn = edict()
-options.model.disn.resolution = 257 # RESO + 1
+options.model.disn.resolution = 257  # RESO + 1
 options.model.disn.split_chunk = 214669
 
 # == MODEL OPTIONS OF PIXEL2MESH ==
 options.model.pixel2mesh = edict()
 
+# == MODEL OPTIONS OF 3DGAN ==
+options.model.threedgan = edict()
+options.model.threedgan.z_size = 200
+options.model.threedgan.voxel_size = 32
+options.model.threedgan.bias = False
+options.model.threedgan.soft_label = True
+options.model.threedgan.z_distribution = "norm"
+options.model.threedgan.d_thresh = 0.8
 
 options.loss = edict()
 options.loss.weights = edict()
@@ -145,6 +154,7 @@ options.test.weighted_mean = False
 options.optim = edict()
 options.optim.name = "adam"
 options.optim.adam_beta1 = 0.9
+options.optim.adam_beta2 = 0.999
 options.optim.sgd_momentum = 0.9
 options.optim.lr = 1.0e-4
 options.optim.wd = 1.0e-5
@@ -152,6 +162,8 @@ options.optim.lr_scheduler = "multistep"
 options.optim.lr_step = [30, 45]
 options.optim.lr_factor = 0.3
 options.optim.lr_gamma = 1.0
+options.optim.lr_d = 0.0025
+options.optim.lr_g = 0.001
 
 
 def _update_dict(full_key, val, d):
