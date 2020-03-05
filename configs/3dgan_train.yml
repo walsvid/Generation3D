@@ -1,0 +1,29 @@
+dataset:
+  name: threedganshapenet
+  filelist_train:
+    - 03001627_train.lst
+  filelist_test:
+    - 03001627_test.lst
+model:
+  backbone: null
+  name: threedgan
+num_gpus: 2
+checkpoint: null
+num_workers: 4
+name: gan3d
+test:
+  batch_size: 1
+  shuffle: false
+train:
+  batch_size: 4
+  num_epochs: 1000
+  backbone_pretrained_model: null
+optim:
+  adam_beta1: 0.5
+  adam_beta2: 0.5
+  lr_d: 0.0025
+  lr_g: 0.001
+  lr_scheduler: "multistep"
+  lr_step:
+    - 500
+    - 1000
