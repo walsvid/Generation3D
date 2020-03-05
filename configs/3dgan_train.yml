@@ -15,15 +15,16 @@ test:
   batch_size: 1
   shuffle: false
 train:
-  batch_size: 4
+  batch_size: 8
   num_epochs: 1000
   backbone_pretrained_model: null
 optim:
+  name: "adam_gan"
   adam_beta1: 0.5
   adam_beta2: 0.5
   lr_d: 0.0025
   lr_g: 0.001
-  lr_scheduler: "multistep"
+  lr_scheduler: "multistep_gan"
   lr_step:
     - 500
     - 1000
