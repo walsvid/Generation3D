@@ -6,6 +6,7 @@
 ##
 # This source code is licensed under the MIT-style license found in the
 # LICENSE file in the root directory of this source tree
+# Modified by: Chao Wen
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 """Encoding Data Parallel"""
@@ -121,8 +122,12 @@ class DataParallelCriterion(DataParallel):
         if not self.device_ids:
             return self.module(inputs, *targets, **kwargs)
         targets, kwargs = self.scatter(targets, kwargs, self.device_ids)
-        if len(self.device_ids) == 1:
-            return self.module(inputs, *targets[0], **kwargs[0])
+        if len(targets) != len(inputs) or not isinstance(inputs, tuple):
+            inputs, _ = self.scatter(inputs, kwargs, self.device_ids)
+        # if len(self.device_ids) == 1:
+        #     import ipdb
+        #     ipdb.set_trace()
+        #     return self.module(*inputs[0], *targets[0], **kwargs[0])
         replicas = self.replicate(self.module, self.device_ids[:len(inputs)])
         outputs = _criterion_parallel_apply(replicas, inputs, targets, kwargs)
 
@@ -187,7 +192,7 @@ def _criterion_parallel_apply(modules, inputs, targets, kwargs_tup=None, devices
         for thread in threads:
             thread.join()
     else:
-        _worker(0, modules[0], inputs[0], kwargs_tup[0], devices[0])
+        _worker(0, modules[0], inputs[0], targets[0], kwargs_tup[0], devices[0])
 
     outputs = []
     for i in range(len(inputs)):
