@@ -54,6 +54,7 @@ options.dataset.name = "shapenet"
 # options.dataset.img_dir = "SuperResoRenderingh5_down8_v1"
 options.dataset.img_dir = "ShapeNetRenderingh5_v1"
 options.dataset.sdf_dir = "SDF_v1"
+options.dataset.voxel_dir = "ShapeNetVox32"
 options.dataset.filelist_train = ["02691156_train.lst"]
 options.dataset.filelist_test = ["02691156_test.lst"]
 options.dataset.normalization = True
@@ -111,6 +112,7 @@ options.model.threedgan = edict()
 options.model.threedgan.z_size = 200
 options.model.threedgan.voxel_size = 32
 options.model.threedgan.bias = False
+options.model.threedgan.soft_label = True
 options.model.threedgan.z_distribution = "norm"
 options.model.threedgan.d_thresh = 0.8
 
