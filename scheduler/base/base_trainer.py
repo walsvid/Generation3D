@@ -144,7 +144,8 @@ class Trainer(CheckpointRunner):
                 # Save checkpoint every checkpoint_steps steps
                 if self.step_count % self.options.train.checkpoint_steps == 0:
                     self.dump_checkpoint()
-            self.dump_checkpoint()
+            if not self.options.model.name.endswith('gan'):
+                self.dump_checkpoint()
             if self.lr_scheduler is not None:
                 self.lr_scheduler.step()
 

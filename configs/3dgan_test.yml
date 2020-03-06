@@ -8,14 +8,14 @@ model:
   backbone: null
   name: threedgan
 num_gpus: 1
-checkpoint: null
+checkpoint: "experiments/checkpoints/gan3d/3dgan_train_0305221653/223410_000677.pt"
 num_workers: 4
 name: gan3d
 test:
   batch_size: 1
   shuffle: false
 train:
-  batch_size: 32
+  batch_size: 8
   num_epochs: 1000
   backbone_pretrained_model: null
 optim:
