@@ -2,7 +2,7 @@
 
 3D Shape Generation Baselines in PyTorch.
 
-![](https://img.shields.io/static/v1?label=Gen3D&message=0.1.0&color=blue) 
+![](https://img.shields.io/static/v1?label=Gen3D&message=0.1.1&color=blue) 
 ![](https://img.shields.io/static/v1?label=PyTorch&message=1.3.1&color=orange)
 ![](https://img.shields.io/static/v1?label=CUDA&message=10.0&color=green)
 #### Feature
@@ -36,6 +36,7 @@
 #### Model Zoo
 - [x] 💎 Pixel2Mesh
 - [x] 🎯 DISN
+- [x] 👾 3DGAN
 - [ ] 👾 Voxel Based Method
 - [ ] 🎲 PointCloud Based Method
 
@@ -92,6 +93,12 @@ CUDA_VISIBLE_DEVICES=<gpus> python predictor.py --options <config>
 - Post-processing: Marching Cube
 - Output: Mesh <sub>camera-view</sub>
 
+### 3DGAN 🎰 👾
+
+- Input: Random Noise
+- Representation: Volumetric
+- Output: Voxel
+
 ---
 
 #### Acknowledgements
@@ -104,6 +111,7 @@ Official baseline code
 
 - [Pixel2Mesh: Generating 3D Mesh Models from Single RGB Images](https://github.com/nywang16/Pixel2Mesh)
 
+- [Learning a Probabilistic Latent Space of Object Shapes via 3D Generative-Adversarial Modeling](https://github.com/zck119/3dgan-release)
 
 #### License
 
