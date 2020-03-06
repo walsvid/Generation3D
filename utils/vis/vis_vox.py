@@ -4,6 +4,8 @@ import os
 import scipy.ndimage as nd
 import scipy.io as io
 import numpy as np
+import matplotlib as mpl
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 import skimage.measure as sk
 from mpl_toolkits import mplot3d
@@ -11,11 +13,11 @@ from mpl_toolkits import mplot3d
 vox = np.ones((13, 6, 20))
 
 
-def plotFromVoxels(voxels, reso=31):
-    z, x, y = voxels.nonzero()
+def plotFromVoxels(voxels, file_path, threshold=0.5, reso=31):
+    z, x, y = np.where(voxels >= threshold)
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.set_aspect('equal')
+    fig.set_size_inches(20.0 / 3, 20.0 / 3)
+    ax = fig.gca(projection='3d')
     ax.set_yticklabels([])
     ax.set_xticklabels([])
     ax.set_zticklabels([])
@@ -28,4 +30,4 @@ def plotFromVoxels(voxels, reso=31):
     ax.set_zlim(0, reso)
     ax.scatter(z, y, x, zdir='z', c='red', marker='s', alpha=0.5)
     plt.margins(0)
-    plt.show()
+    fig.savefig(file_path, format='png', transparent=True, dpi=300, pad_inches=0, bbox_inches='tight')
