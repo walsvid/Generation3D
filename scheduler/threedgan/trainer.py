@@ -83,7 +83,7 @@ class ThreeDGANTrainer(Trainer):
         }
 
         self.losses.update(g_loss.detach().cpu().item())
-        # # Pack output arguments to be used for visualization
+        # Pack output arguments to be used for visualization
         return recursive_detach(out), recursive_detach(loss_summary)
 
     def generateZ(self, options, batch_size, device):
