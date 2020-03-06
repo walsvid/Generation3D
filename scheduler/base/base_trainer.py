@@ -59,6 +59,20 @@ class Trainer(CheckpointRunner):
                 momentum=self.options.optim.sgd_momentum,
                 weight_decay=self.options.optim.wd
             )
+        elif optim_name == "adam_gan":
+            optimizer_d = torch.optim.Adam(
+                params=list(self.model.module.D.parameters()),
+                lr=self.options.optim.lr_d,
+                betas=(self.options.optim.adam_beta1, 0.999),
+                weight_decay=0
+            )
+            optimizer_g = torch.optim.Adam(
+                params=list(self.model.module.G.parameters()),
+                lr=self.options.optim.lr_g,
+                betas=(self.options.optim.adam_beta1, 0.999),
+                weight_decay=0
+            )
+            return {"optimizer_d": optimizer_d, "optimizer_g": optimizer_g}
         else:
             raise NotImplementedError("Your optimizer is not found")
         return optimizer
@@ -70,6 +84,9 @@ class Trainer(CheckpointRunner):
         elif lr_scheduler_name == "exp":
             lr_scheduler = torch.optim.lr_scheduler.ExponentialLR(
                 self.optimizer, gamma=self.options.optim.lr_gamma)
+        elif lr_scheduler_name == "multistep_gan":
+            lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(
+                self.optimizer["optimizer_d"], self.options.optim.lr_step, self.options.optim.lr_factor)
         else:
             r_scheduler = None
 
@@ -127,7 +144,8 @@ class Trainer(CheckpointRunner):
                 # Save checkpoint every checkpoint_steps steps
                 if self.step_count % self.options.train.checkpoint_steps == 0:
                     self.dump_checkpoint()
-            self.dump_checkpoint()
+            if not self.options.model.name.endswith('gan'):
+                self.dump_checkpoint()
             if self.lr_scheduler is not None:
                 self.lr_scheduler.step()
 

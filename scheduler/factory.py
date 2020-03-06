@@ -1,8 +1,10 @@
 from .p2m.trainer import P2MTrainer
 from .disn.trainer import DISNTrainer
+from .threedgan.trainer import ThreeDGANTrainer
 
 from .p2m.predictor import P2MPredictor
 from .disn.predictor import DISNPredictor
+from .threedgan.predictor import ThreeDGANPredictor
 
 
 def get_trainer(options, logger, writer):
@@ -10,6 +12,8 @@ def get_trainer(options, logger, writer):
         trainer = P2MTrainer(options, logger, writer)
     elif options.model.name == "disn":
         trainer = DISNTrainer(options, logger, writer)
+    elif options.model.name == "threedgan":
+        trainer = ThreeDGANTrainer(options, logger, writer)
     else:
         raise NotImplementedError("No implemented trainer called '%s' found" % options.model.name)
     return trainer
@@ -20,6 +24,8 @@ def get_predictor(options, logger, writer):
         predictor = P2MPredictor(options, logger, writer)
     elif options.model.name == "disn":
         predictor = DISNPredictor(options, logger, writer)
+    elif options.model.name == "threedgan":
+        predictor = ThreeDGANPredictor(options, logger, writer)
     else:
         raise NotImplementedError("No implemented trainer called '%s' found" % options.model.name)
     return predictor

@@ -6,6 +6,7 @@
 ##
 # This source code is licensed under the MIT-style license found in the
 # LICENSE file in the root directory of this source tree
+# Modified by: Chao Wen
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 """Encoding Data Parallel"""
@@ -121,25 +122,29 @@ class DataParallelCriterion(DataParallel):
         if not self.device_ids:
             return self.module(inputs, *targets, **kwargs)
         targets, kwargs = self.scatter(targets, kwargs, self.device_ids)
-        if len(self.device_ids) == 1:
-            return self.module(inputs, *targets[0], **kwargs[0])
+        if len(targets) != len(inputs) or not isinstance(inputs, tuple):
+            inputs, _ = self.scatter(inputs, kwargs, self.device_ids)
+        # if len(self.device_ids) == 1:
+        #     import ipdb
+        #     ipdb.set_trace()
+        #     return self.module(*inputs[0], *targets[0], **kwargs[0])
         replicas = self.replicate(self.module, self.device_ids[:len(inputs)])
         outputs = _criterion_parallel_apply(replicas, inputs, targets, kwargs)
 
         num_gpu = len(outputs)
 
-        loss_values = [outputs[i][0] for i in range(num_gpu)]
-        result_loss_values = Reduce.apply(*loss_values) / num_gpu
+        if isinstance(outputs[0], tuple):
+            loss_values = [outputs[i][0] for i in range(num_gpu)]
+            result_loss_values = Reduce.apply(*loss_values) / num_gpu
 
-        reduced_dic = {}
-        for key in outputs[0][1].keys():
-            loss_summary_key = [outputs[i][1][key] for i in range(num_gpu)]
-            result_loss_summary_key = Reduce.apply(*loss_summary_key) / num_gpu
-            reduced_dic[key] = result_loss_summary_key
-        # result = Reduce.apply(*outputs) / len(outputs)
-        # import ipdb
-        # ipdb.set_trace()
-        result = result_loss_values, reduced_dic
+            reduced_dic = {}
+            for key in outputs[0][1].keys():
+                loss_summary_key = [outputs[i][1][key] for i in range(num_gpu)]
+                result_loss_summary_key = Reduce.apply(*loss_summary_key) / num_gpu
+                reduced_dic[key] = result_loss_summary_key
+            result = result_loss_values, reduced_dic
+        else:
+            result = Reduce.apply(*outputs) / len(outputs)
         return result
 
 
@@ -187,7 +192,7 @@ def _criterion_parallel_apply(modules, inputs, targets, kwargs_tup=None, devices
         for thread in threads:
             thread.join()
     else:
-        _worker(0, modules[0], inputs[0], kwargs_tup[0], devices[0])
+        _worker(0, modules[0], inputs[0], targets[0], kwargs_tup[0], devices[0])
 
     outputs = []
     for i in range(len(inputs)):

@@ -11,6 +11,7 @@ from torch.utils.data.dataloader import default_collate
 import utils.config as config
 from datasets.p2m_shapenet import ShapeNet
 from datasets.sdf_shapenet import ShapeNet as SDFShapeNet
+from datasets.threedgan_shapenet import ThreeDGANShapeNet
 
 from scheduler.base.saver import CheckpointSaver
 
@@ -76,6 +77,11 @@ class CheckpointRunner(object):
                                dataset.img_dir, dataset.sdf_dir,
                                dataset.normalization, dataset.shapenet,
                                self.logger)
+        elif dataset.name == "threedganshapenet":
+            return ThreeDGANShapeNet(config.SHAPENET_ROOT, dataset.filelist_train if training else dataset.filelist_test,
+                                     dataset.voxel_dir,
+                                     dataset.normalization, dataset.shapenet,
+                                     self.logger)
         elif dataset.name == "shapenet_demo":
             raise NotImplementedError("Unsupported dataset")
             # return ShapeNetImageFolder(dataset.predict.folder, dataset.normalization, dataset.shapenet)
