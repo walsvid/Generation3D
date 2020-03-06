@@ -17,7 +17,7 @@ def parse_args():
 
     parser.add_argument('--batch-size', help='batch size', type=int)
     parser.add_argument('--checkpoint', help='trained model file', type=str)
-    parser.add_argument('--folder', required=True, type=str)
+    # parser.add_argument('--folder', required=True, type=str)
     parser.add_argument('--name', help='model name', type=str)
 
     args = parser.parse_args()
